@@ -22,6 +22,5 @@ module.exports = {
     workboxOptions: {
       cleanupOutdatedCaches: true // cleans up cache that is outdated because of a previous version of Workbox.
     }
-    // navigateFallback: './public/index.html'
   }
 }
