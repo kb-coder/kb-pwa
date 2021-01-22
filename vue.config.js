@@ -11,13 +11,13 @@ module.exports = {
     }
   },
   pwa: {
-    name: 'KB PWA App',
-    shorName: 'KB PWA',
+    name: 'KB Coder PWA App',
+    shorName: 'KB Coder',
     themeColor: '#400080',
     msTileColor: '#800080',
     workboxPluginMode: 'GenerateSW',
     workboxOptions: {
-      cleanupOutdatedCaches: true // cleans up cache that is out dated because of a previous version of Workbox.
+      cleanupOutdatedCaches: true // cleans up cache that is outdated because of a previous version of Workbox.
     }
   }
 }
