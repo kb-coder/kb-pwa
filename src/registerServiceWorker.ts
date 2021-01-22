@@ -3,24 +3,37 @@
 import { register } from 'register-service-worker'
 
 if (process.env.NODE_ENV === 'production') {
+  // registers service work with hooks into workbox methods.
   register(`${process.env.BASE_URL}service-worker.js`, {
-    ready () {
+    ready () { // can take ServiceWorkerRegistration as a param // ready(registration) {}
       console.log(
         'App is being served from cache by a service worker.\n' +
         'For more details, visit https://goo.gl/AFskqB'
       )
     },
-    registered () {
+    registered () { // can take ServiceWorkerRegistration as a param // registered(registration) {}
       console.log('Service worker has been registered.')
     },
-    cached () {
+    cached () { // can take ServiceWorkerRegistration as a param // cached(registration) {}
       console.log('Content has been cached for offline use.')
     },
-    updatefound () {
+    updatefound (registration) {
       console.log('New content is downloading.')
+
+      // Forces the app to skip waiting and update. This can be adjusted to work with first login or something similar.
+      const waitingServiceWorker = registration.waiting
+      if (waitingServiceWorker) {
+        // when using 'GenerateSW' for workboxPluginMode, the 'SKIP_WAITING' is automatically wired up so all we have to do is call this to invoke SW update.
+        waitingServiceWorker.postMessage({ type: 'SKIP_WAITING' })
+      }
     },
-    updated () {
+    updated (registration) {
       console.log('New content is available; please refresh.')
+
+      // Wires up an event that we can listen to in the app. Example: listen for available update and prompt user to update.
+      document.dispatchEvent(
+        new CustomEvent('swUpdated', { detail: registration })
+      )
     },
     offline () {
       console.log('No internet connection found. App is running in offline mode.')

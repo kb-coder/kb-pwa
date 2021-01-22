@@ -11,8 +11,8 @@
     "test:unit-single": "vue-cli-service test:unit -t app-bar",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
-    "releaseServe": "vue-cli-service serve --modern --mode production --open --port 44331",
-    "test:coverage": "vue-cli-service test:unit --coverage"
+    "test:coverage": "vue-cli-service test:unit --coverage",
+    "pwa-serve": "serve -s dist -l 44331"
   },
   "dependencies": {
     "core-js": "^3.6.5",

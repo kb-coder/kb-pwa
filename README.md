@@ -1,13 +1,22 @@
 # kb-pwa
+This is a sample PWA using Vue 3 and the Vue CLI PWA plugin.
+
 
 ## Project setup
 ```
 npm install
 ```
 
+### Instal Serve globally
+If you don't already have `serve` installed globally, you will need it for serving the PWA in production mode so you can test installing the PWA from your machine.
+
+```
+npm install -g serve
+```
+
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+npm run dev
 ```
 
 ### Compiles and minifies for production
@@ -30,5 +39,7 @@ npm run test:e2e
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Serves PWA in Production Mode
+```
+npm run pwa-serve
+```

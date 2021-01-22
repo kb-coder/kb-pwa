@@ -15,9 +15,13 @@ module.exports = {
     shorName: 'KB Coder',
     themeColor: '#400080',
     msTileColor: '#800080',
+    manifestOptions: {
+      start_url: './index.html'
+    },
     workboxPluginMode: 'GenerateSW',
     workboxOptions: {
       cleanupOutdatedCaches: true // cleans up cache that is outdated because of a previous version of Workbox.
     }
+    // navigateFallback: './public/index.html'
   }
 }
