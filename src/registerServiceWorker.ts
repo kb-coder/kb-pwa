@@ -1,15 +1,21 @@
 /* eslint-disable no-console */
-
+import { serviceWorkerConstants } from './service-worker-constants'
 import { register } from 'register-service-worker'
 
 if (process.env.NODE_ENV === 'production') {
-  // registers service work with hooks into workbox methods.
+  // registers service worker with hooks into workbox methods.
   register(`${process.env.BASE_URL}service-worker.js`, {
-    ready () { // can take ServiceWorkerRegistration as a param // ready(registration) {}
+    // ready (registration) {
+    ready () {
       console.log(
         'App is being served from cache by a service worker.\n' +
         'For more details, visit https://goo.gl/AFskqB'
       )
+
+      // auto-check for updates every hour
+      // setInterval(() => {
+      //   registration.update()
+      // }, 1000 * 60 * 60)
     },
     registered () { // can take ServiceWorkerRegistration as a param // registered(registration) {}
       console.log('Service worker has been registered.')
@@ -23,17 +29,16 @@ if (process.env.NODE_ENV === 'production') {
       // Forces the app to skip waiting and update. This can be adjusted to work with first login or something similar.
       const waitingServiceWorker = registration.waiting
       if (waitingServiceWorker) {
-        // when using 'GenerateSW' for workboxPluginMode, the 'SKIP_WAITING' is automatically wired up so all we have to do is call this to invoke SW update.
-        waitingServiceWorker.postMessage({ type: 'SKIP_WAITING' })
+        waitingServiceWorker.postMessage(serviceWorkerConstants.skipWaiting)
       }
     },
     updated (registration) {
       console.log('New content is available; please refresh.')
+      console.dir(registration)
 
       // Wires up an event that we can listen to in the app. Example: listen for available update and prompt user to update.
       document.dispatchEvent(
-        new CustomEvent('swUpdated', { detail: registration })
-      )
+        new CustomEvent('swUpdated', { detail: registration }))
     },
     offline () {
       console.log('No internet connection found. App is running in offline mode.')

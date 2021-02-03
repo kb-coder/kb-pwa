@@ -12,7 +12,8 @@
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
     "test:coverage": "vue-cli-service test:unit --coverage",
-    "pwa-serve": "serve -s dist -l 44331"
+    "pwa-build": "vue-cli-service build --mode production",
+    "pwa-serve": "npm run pwa-build && serve -s dist -l 44331"
   },
   "dependencies": {
     "core-js": "^3.6.5",
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.19",
+    "@types/workbox-sw": "^4.3.1",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
     "@vue/cli-plugin-babel": "~4.5.0",

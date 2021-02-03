@@ -16,13 +16,15 @@ module.exports = {
     themeColor: '#400080',
     msTileColor: '#800080',
     manifestOptions: {
+      // eslint-disable-next-line @typescript-eslint/camelcase
       start_url: '/' // The default vue pwa plugin uses '.'. Also many examples on line show '/index.html'. Either of these will
       // result in a blank screen when installed on iOS or Android, but they will work fine on a PC. The '/' must also be included
       // in the router. This will meet the requirements of a good start_url and it will install and display correctly on the devices.
     },
-    workboxPluginMode: 'GenerateSW',
+    workboxPluginMode: 'InjectManifest', // GenerateSW doesn't allow you to send the SKIP_WAITING message to allow users to update PWA.
     workboxOptions: {
-      cleanupOutdatedCaches: true // cleans up cache that is outdated because of a previous version of Workbox.
+      swSrc: './src/sw.js',
+      swDest: 'service-worker.js'
     }
   },
   chainWebpack: config => {
