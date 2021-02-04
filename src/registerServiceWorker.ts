@@ -6,16 +6,16 @@ if (process.env.NODE_ENV === 'production') {
   // registers service worker with hooks into workbox methods.
   register(`${process.env.BASE_URL}service-worker.js`, {
     // ready (registration) {
-    ready () {
+    ready (registration) {
       console.log(
         'App is being served from cache by a service worker.\n' +
         'For more details, visit https://goo.gl/AFskqB'
       )
 
       // auto-check for updates every hour
-      // setInterval(() => {
-      //   registration.update()
-      // }, 1000 * 60 * 60)
+      setInterval(() => {
+        registration.update()
+      }, 1000 * 60 * 60)
     },
     registered () { // can take ServiceWorkerRegistration as a param // registered(registration) {}
       console.log('Service worker has been registered.')
