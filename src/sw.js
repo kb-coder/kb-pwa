@@ -1,3 +1,4 @@
+/* eslint-disable */
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js')
 
 // This is the code piece that GenerateSW mode can't provide for us.

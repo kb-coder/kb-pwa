@@ -34,7 +34,7 @@ if (process.env.NODE_ENV === 'production') {
     },
     updated (registration) {
       console.log('New content is available; please refresh.')
-      console.dir(registration)
+      // console.dir(registration)
 
       // Wires up an event that we can listen to in the app. Example: listen for available update and prompt user to update.
       document.dispatchEvent(
