@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { serviceWorkerConstants } from '@/service-worker-constants'
 
-export const useServiceWorker = () => {
+export const useServiceWorker = (forceUpdate = false) => {
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   let registration: any = null
   const updateExists = ref(false)
@@ -10,7 +10,7 @@ export const useServiceWorker = () => {
   const reloadApp = () => {
     if (refreshing.value) {
       /* eslint-disable-next-line no-console */
-      console.log('App.vue: Service Worker already refreshing')
+      console.log('useServiceWorker: Service Worker already refreshing')
       return
     }
 
@@ -20,7 +20,7 @@ export const useServiceWorker = () => {
 
   const refreshApp = () => {
     /* eslint-disable-next-line no-console */
-    console.log('App.vue: refreshApp called.')
+    console.log('useServiceWorker: refreshApp called.')
     updateExists.value = false
     if (registration) {
       const swState = registration.waiting.state
@@ -34,10 +34,15 @@ export const useServiceWorker = () => {
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const updateAvailable = (event: any) => {
     /* eslint-disable-next-line no-console */
-    console.log('App.vue: Service worker update available.')
+    console.log('useServiceWorker: Service worker update available.')
     if (event && event.detail) {
       registration = event.detail
       updateExists.value = true
+      if (forceUpdate) {
+        /* eslint-disable-next-line no-console */
+        console.log('useServiceWorker: Forcing service worker update.')
+        refreshApp()
+      }
     }
   }
 
