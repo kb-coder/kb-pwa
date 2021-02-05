@@ -1,17 +1,17 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import ServiceWorkerUpdate from '@/components/service-worker-updated.vue'
+import AppManualUpdate from '@/components/app-manual-update.vue'
 
 export default defineComponent({
   name: 'App',
   components: {
-    ServiceWorkerUpdate
+    AppManualUpdate
   }
 })
 </script>
 
 <template>
-  <ServiceWorkerUpdate />
+  <AppManualUpdate />
   <div id="nav">
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>

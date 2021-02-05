@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'production') {
         'For more details, visit https://goo.gl/AFskqB'
       )
 
-      // auto-check for updates every hour
+      // auto-check for updates every hour. Without this, user has to manually refresh browser - which can't happen when app is installed.
       setInterval(() => {
         registration.update()
       }, 1000 * 60 * 60)
@@ -29,13 +29,12 @@ if (process.env.NODE_ENV === 'production') {
       // Forces the app to skip waiting and update. This can be adjusted to work with first login or something similar.
       const waitingServiceWorker = registration.waiting
       if (waitingServiceWorker) {
+        // this only triggers skipWaiting. It still doesn't force the app to update. See /composoables/use-service-worker.ts for updating app.
         waitingServiceWorker.postMessage(serviceWorkerConstants.skipWaiting)
       }
     },
     updated (registration) {
       console.log('New content is available; please refresh.')
-      // console.dir(registration)
-
       // Wires up an event that we can listen to in the app. Example: listen for available update and prompt user to update.
       document.dispatchEvent(
         new CustomEvent('swUpdated', { detail: registration }))

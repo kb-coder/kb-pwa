@@ -3,6 +3,7 @@ import { defineComponent } from 'vue'
 import { useServiceWorker } from '@/composables/use-service-worker'
 
 export default defineComponent({
+  name: 'AppManualUpdate',
   setup () {
     const { updateExists, refreshApp } = useServiceWorker()
 
