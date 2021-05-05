@@ -23,7 +23,6 @@ export default defineComponent({
 
     const toggleDrawer = () => {
       openDrawer.value = !openDrawer.value
-      console.log(openDrawer.value)
     }
 
     const closeDrawer = () => {

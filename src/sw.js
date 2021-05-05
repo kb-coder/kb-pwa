@@ -1,5 +1,5 @@
-/* eslint-disable */
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js')
+// webpack will inject the manifest into this file and name it service-worker.js in the output.
+importScripts('./service-worker/register-routes.js') // eslint-disable
 
 // This is the code piece that GenerateSW mode can't provide for us.
 // This code listens for the user's confirmation to update the app.
@@ -20,15 +20,16 @@ self.addEventListener('message', (e) => {
   }
 })
 
-workbox.core.clientsClaim() // Vue CLI 4 and Workbox v4, else
+self.addEventListener('onupdatefound', (event) => {
+  console.log('New content is downloading.')
+  self.skipWaiting()
+})
 
-/**
- * The workboxSW.precacheAndRoute() method efficiently caches and responds to
- * requests for URLs in the manifest.
- * See https://goo.gl/S9QRab
- */
+// workbox.core.clientsClaim() // Vue CLI 4 and Workbox v4, else
+
 self.__precacheManifest = [].concat(self.__precacheManifest || [])
-workbox.precaching.precacheAndRoute(self.__precacheManifest, {})
 
-// cleans up cache that is outdated because of a previous version of Workbox.
-workbox.precaching.cleanupOutdatedCaches()
+// workbox.precaching.precacheAndRoute(self.__precacheManifest, {})
+
+// // cleans up cache that is outdated because of a previous version of Workbox.
+// workbox.precaching.cleanupOutdatedCaches()
