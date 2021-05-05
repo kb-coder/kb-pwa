@@ -1,5 +1,89 @@
 @tailwind base;
-
 @tailwind components;
-
 @tailwind utilities;
+
+/* Style Naming - be careful not to name styles with a name that would override any
+of the @sfc-enterprise-ui/theme styles or Tailwind styles unintentionally.
+*/
+
+@layer base {
+  h1 {
+    @apply text-5xl;
+  }
+  h2 {
+    @apply text-4xl;
+  }
+  h3 {
+    @apply text-3xl;
+  }
+  h4 {
+    @apply text-2xl;
+  }
+  h5 {
+    @apply text-xl;
+  }
+  h6 {
+    @apply text-lg;
+  }
+  a:not(nav) {
+    @apply no-underline text-primary;
+  }
+
+  a:not(nav):hover {
+    @apply underline text-primary-light cursor-pointer;
+  }
+}
+
+.btn-b-r {
+  @apply absolute bottom-2 right-4;
+}
+
+.btn-b-l {
+  @apply absolute bottom-2 left-4;
+}
+
+/* override shamrock-theme with tailwind styles for button to give us more control at responsive sizes */
+.btn {
+  @apply align-middle;
+}
+
+@screen md {
+  .btn {
+    @apply mb-0;
+  }
+}
+
+.anchor-as-text > a,
+a.anchor-as-text {
+  @apply text-gray-700 cursor-pointer no-underline;
+}
+
+/* opacity only fade transition */
+.fade-enter-active,
+.fade-leave-active {
+  transition-property: opacity;
+  transition-duration: 0.25s;
+}
+.fade-enter-active {
+  transition-delay: 0.25s;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* slide-fade transition */
+.slide-fade-enter-active {
+  transition: all 0.3s ease;
+  transition-delay: 0.4s;
+}
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-fade-enter-from {
+  transform: translateX(20px);
+  opacity: 0;
+}
+.slide-fade-leave-to {
+  opacity: 0;
+}

@@ -18,15 +18,18 @@
     "@tailwindcss/postcss7-compat": "^2.0.2",
     "autoprefixer": "^9",
     "core-js": "^3.11.2",
+    "lodash.isempty": "^4.4.0",
     "postcss": "^7",
     "register-service-worker": "^1.7.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
     "vue": "^3.0.11",
-    "vue-router": "^4.0.6",
+    "vue-router": "^4.0.3",
     "vuex": "^4.0.0"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.3",
     "@types/jest": "^24.0.19",
+    "@types/lodash.isempty": "^4.4.6",
     "@types/workbox-sw": "^4.3.1",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
@@ -50,7 +53,7 @@
     "eslint-plugin-vue": "^7.9.0",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
-    "typescript": "^3.9.9",
+    "typescript": "^3.9.7",
     "vue-cli-plugin-tailwind": "~2.0.6",
     "vue-jest": "^5.0.0-0"
   }
