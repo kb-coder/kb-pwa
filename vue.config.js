@@ -23,7 +23,7 @@ module.exports = {
     },
     workboxPluginMode: 'InjectManifest', // GenerateSW doesn't allow you to send the SKIP_WAITING message to allow users to update PWA.
     workboxOptions: {
-      swSrc: './src/sw.js',
+      swSrc: './src/service-worker/sw.js',
       swDest: 'service-worker.js'
     }
   },

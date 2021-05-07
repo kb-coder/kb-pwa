@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import { serviceWorkerConstants } from '@/service-worker-constants'
+import { serviceWorkerConstants } from '@/service-worker/service-worker-constants'
 
 export const useServiceWorker = (forceUpdate = false) => {
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */

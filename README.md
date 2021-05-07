@@ -1,6 +1,5 @@
 # kb-pwa
-This is a sample PWA using Vue 3 and the Vue CLI PWA plugin.
-
+This is a sample PWA using Vue 3 and the Vue CLI PWA plugin and Workbox.
 
 ## Project setup
 ```
@@ -12,6 +11,12 @@ If you don't already have `serve` installed globally, you will need it for servi
 
 ```
 npm install -g serve
+```
+
+### Serves PWA in Production Mode
+Use this to debug the service worker
+```
+npm run pwa-serve
 ```
 
 ### Compiles and hot-reloads for development
@@ -39,7 +44,3 @@ npm run test:e2e
 npm run lint
 ```
 
-### Serves PWA in Production Mode
-```
-npm run pwa-serve
-```

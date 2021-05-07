@@ -1,7 +1,13 @@
+import { precacheAndRoute, cleanupOutdatedCaches } from 'workbox-precaching'
 import { registerRoute } from 'workbox-routing'
 import { CacheFirst, NetworkFirst, StaleWhileRevalidate } from 'workbox-strategies'
 import { ExpirationPlugin } from 'workbox-expiration'
 import { CacheableResponsePlugin } from 'workbox-cacheable-response'
+
+precacheAndRoute(self.__WB_MANIFEST)
+
+// cleans up cache that is outdated because of a previous version of Workbox.
+cleanupOutdatedCaches()
 
 // Get index.html from network first.
 registerRoute(
