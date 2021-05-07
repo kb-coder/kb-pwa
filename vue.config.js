@@ -34,5 +34,34 @@ module.exports = {
         args[0].title = 'KB Coder PWA App' // Add title to the app bar when installed as PWA.
         return args
       })
+
+    // When running pwalocalserve, its configured to build application with NODE_ENV with 'development'
+    // so we can get the debugging for Workbox to debug the service worker.
+    // But in the script to build pwalocalserve, we disable @vue/cli-plugin-pwa
+    // so this adds in the pieces from the @vue/cli-plugin-pwa that we actually need.
+    console.log(process.env.VUE_APP_PWA_LOCAL_SERVE)
+    if (process.env.VUE_APP_PWA_LOCAL_SERVE === 'true') {
+      // generate /service-worker.js
+      // Default to GenerateSW mode, though InjectManifest also might be used.
+      const workboxPluginMode = 'InjectManifest'
+      const workboxWebpackModule = require('workbox-webpack-plugin')
+      const defaultOptions = {
+        exclude: [
+          /\.map$/,
+          /img\/icons\//,
+          /favicon\.ico$/,
+          /^manifest.*\.js?$/
+        ]
+      }
+
+      const workBoxConfig = Object.assign(defaultOptions, {},  {
+        swSrc: './src/service-worker/sw.js',
+        swDest: 'service-worker.js'
+      })
+
+      config
+        .plugin('workbox')
+        .use(workboxWebpackModule[workboxPluginMode], [workBoxConfig])
+    }
   }
 }
