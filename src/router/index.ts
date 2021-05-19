@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '../views/Home.vue'
-import About from '../views/About.vue'
 import AppHeader from '@/components/app-header.vue'
 import { routeConstants, routeNavConfig } from '@/router/route-constants'
+const About = () => import(/* webpackChunkName: "about" */ '../views/About.vue')
 
 const routes: Array<RouteRecordRaw> = [
   {

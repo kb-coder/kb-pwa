@@ -9,6 +9,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "allowJs": true,
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
@@ -34,7 +35,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx",
-    "src/service-worker/register-service-worker.ts",
+    "src/service-worker/register-service-worker.js",
     "src/service-worker/sw.js"
   ],
   "exclude": [
