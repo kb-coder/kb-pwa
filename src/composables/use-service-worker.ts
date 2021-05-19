@@ -1,45 +1,49 @@
-import { ref } from 'vue'
-import { serviceWorkerConstants } from '@/service-worker/service-worker-constants'
+/* eslint-disable no-console */
+import { ref, Ref } from 'vue'
+import { Workbox } from 'workbox-window'
 
-export const useServiceWorker = (forceUpdate = false) => {
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  let registration: any = null
-  const updateExists = ref(false)
-  const refreshing = ref(false)
+interface UseServiceWorker {
+  refreshApp: VoidFunction,
+  updateExists: Ref<boolean>
+}
+
+export const useServiceWorker = (forceUpdate = false): UseServiceWorker => {
+  let wb: Workbox
+  const updateExists: Ref<boolean> = ref(false)
+  const refreshing: Ref<boolean> = ref(false)
+
+  console.log('useServiceWorker: initialized.')
 
   const reloadApp = () => {
     if (refreshing.value) {
-      /* eslint-disable-next-line no-console */
       console.log('useServiceWorker: Service Worker already refreshing')
       return
     }
 
     refreshing.value = true
+    updateExists.value = false
     window.location.reload()
   }
 
   const refreshApp = () => {
-    /* eslint-disable-next-line no-console */
     console.log('useServiceWorker: refreshApp called.')
-    updateExists.value = false
-    if (registration) {
-      const swState = registration.waiting.state
-      if (swState === 'waiting' || swState === 'installed') {
-        registration.waiting.postMessage(serviceWorkerConstants.skipWaiting)
-      }
-    }
+    wb.addEventListener('controlling', () => {
+      reloadApp()
+    })
+
+    wb.messageSkipWaiting()
   }
 
-  // ServiceWorkerRegistration type definition doesn't allow null so we have to use any here.
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const updateAvailable = (event: any) => {
-    /* eslint-disable-next-line no-console */
     console.log('useServiceWorker: Service worker update available.')
     if (event && event.detail) {
-      registration = event.detail
+      wb = event.detail
       updateExists.value = true
+
+      // forceUpdate is used by the app-auto-update component to force the app to activate.
+      // Recommend only using this on the initial landing page or login page of an application.
       if (forceUpdate) {
-        /* eslint-disable-next-line no-console */
         console.log('useServiceWorker: Forcing service worker update.')
         refreshApp()
       }
@@ -48,12 +52,6 @@ export const useServiceWorker = (forceUpdate = false) => {
 
   // listen for service worker updates.
   document.addEventListener('swUpdated', updateAvailable, { once: true })
-
-  if (navigator.serviceWorker) {
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      reloadApp()
-    })
-  }
 
   return {
     refreshApp,

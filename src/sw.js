@@ -17,13 +17,12 @@ registerRoute(
   })
 )
 
-// Cache CSS, JS, and Web Worker requests with a Stale While Revalidate strategy
+// Cache CSS and JS requests with a Stale While Revalidate strategy
 registerRoute(
   // Check to see if the request's destination is style for stylesheets, script for JavaScript, or worker for web worker
   ({ request }) =>
     request.destination === 'style' ||
-    request.destination === 'script' ||
-    request.destination === 'worker',
+    request.destination === 'script',
   // Use a Stale While Revalidate caching strategy
   new StaleWhileRevalidate({
     // Put all cached files in a cache named 'assets'
@@ -58,3 +57,13 @@ registerRoute(
     ]
   })
 )
+
+self.addEventListener('message', (event) => {
+  console.log('sw root: message event listener hit.')
+  switch (event.data && event.data.type) {
+    case 'SKIP_WAITING':
+      self.skipWaiting()
+      console.log('sw root: message SKIP_WAITING called.')
+      break
+  }
+})

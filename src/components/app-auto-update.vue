@@ -5,7 +5,6 @@ import { useServiceWorker } from '@/composables/use-service-worker'
 export default defineComponent({
   name: 'AppAutoUpdate',
   setup () {
-    // useServiceWorker has a param to force update so all we have to do is reference this component somewhere, ideally on a login page.
     const { updateExists } = useServiceWorker(true)
 
     return {
