@@ -23,5 +23,10 @@ module.exports = {
       swSrc: './src/sw.js',
       swDest: 'service-worker.js'
     }
+  },
+  chainWebpack: config => {
+    // Webpack includes a small piece of runtime code that gets inserted into the last chunk created. This could cause our vendor
+    // chunk to change unnecessarily. So the next line causes this runtime to be put in a separate file.
+    config.optimization.set('runtimeChunk', true)
   }
 }

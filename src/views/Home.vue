@@ -8,7 +8,12 @@ export default defineComponent({
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <h1>My New PWA</h1>
-    <p></p>
+    <h1>My PWA</h1>
+    <p>This is a sample PWA</p>
   </div>
 </template>
+<style scoped>
+h1 {
+  padding-bottom: .75em;
+}
+</style>
