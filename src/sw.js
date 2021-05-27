@@ -1,34 +1,75 @@
-/* eslint-disable */
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js')
+/* eslint-disable no-console */
+import { precacheAndRoute, cleanupOutdatedCaches } from 'workbox-precaching'
+import { registerRoute } from 'workbox-routing'
+import { CacheFirst, NetworkFirst, StaleWhileRevalidate } from 'workbox-strategies'
+import { ExpirationPlugin } from 'workbox-expiration'
+import { CacheableResponsePlugin } from 'workbox-cacheable-response'
 
-// This is the code piece that GenerateSW mode can't provide for us.
-// This code listens for the user's confirmation to update the app.
-self.addEventListener('message', (e) => {
-  console.log('sw: message event listener hit.')
-  if (!e.data) {
-    return
-  }
+precacheAndRoute(self.__WB_MANIFEST)
 
-  switch (e.data) {
+// cleans up cache that is outdated because of a previous version of Workbox.
+cleanupOutdatedCaches()
+
+// Get index.html from network first.
+registerRoute(
+  /(\/|\.html)$/,
+  new NetworkFirst({
+    cacheName: 'html'
+  })
+)
+
+// Cache CSS and JS requests with a Stale While Revalidate strategy
+registerRoute(
+  // Check to see if the request's destination is style for stylesheets, script for JavaScript, or worker for web worker
+  ({ request }) =>
+    request.destination === 'style' ||
+    request.destination === 'script',
+  // Use a Stale While Revalidate caching strategy
+  new StaleWhileRevalidate({
+    // Put all cached files in a cache named 'assets'
+    cacheName: 'assets',
+    plugins: [
+      // Ensure that only requests that result in a 200 status are cached
+      new CacheableResponsePlugin({
+        statuses: [200]
+      })
+    ]
+  })
+)
+
+// Cache images with a Cache First strategy
+registerRoute(
+  // Check to see if the request's destination is style for an image
+  ({ request }) => request.destination === 'image',
+  // Use a Cache First caching strategy
+  new CacheFirst({
+    // Put all cached files in a cache named 'images'
+    cacheName: 'images',
+    plugins: [
+      // Ensure that only requests that result in a 200 status are cached
+      new CacheableResponsePlugin({
+        statuses: [200]
+      }),
+      // Don't cache more than 50 items, and expire them after 30 days
+      new ExpirationPlugin({
+        maxEntries: 50,
+        maxAgeSeconds: 60 * 60 * 24 * 30 // 30 Days
+      })
+    ]
+  })
+)
+
+self.addEventListener('message', (event) => {
+  console.log('sw root: message event listener hit.')
+  switch (event.data && event.data.type) {
     case 'SKIP_WAITING':
-      console.log('sw: message SKIP_WAITING called.')
       self.skipWaiting()
-      break
-    default:
-      // NOOP
+      console.log('sw root: message SKIP_WAITING called.')
       break
   }
 })
 
-workbox.core.clientsClaim() // Vue CLI 4 and Workbox v4, else
-
-/**
- * The workboxSW.precacheAndRoute() method efficiently caches and responds to
- * requests for URLs in the manifest.
- * See https://goo.gl/S9QRab
- */
-self.__precacheManifest = [].concat(self.__precacheManifest || [])
-workbox.precaching.precacheAndRoute(self.__precacheManifest, {})
-
-// cleans up cache that is outdated because of a previous version of Workbox.
-workbox.precaching.cleanupOutdatedCaches()
+self.addEventListener('fetch', (event) => {
+  console.log('sw root: fetch event listener hit.')
+  console.log(event)
+})

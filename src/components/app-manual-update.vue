@@ -17,12 +17,19 @@ export default defineComponent({
 
 <template>
   <div
-    style="background-color: #FFFF99;"
-    v-if="updateExists"
+    style="background-color: #FFFF99;padding:0.75em"
+    v-show="updateExists"
   >
     Update available
-    <button @click="refreshApp">
+    <button class="btn p-1 rounded-sm" @click="refreshApp">
       Update
     </button>
   </div>
 </template>
+<style scoped>
+.btn {
+  background-color: lightgray;
+  border: 1px solid darkslategray;
+  color: black;
+}
+</style>

@@ -16,23 +16,20 @@ module.exports = {
     themeColor: '#400080',
     msTileColor: '#800080',
     manifestOptions: {
-      // eslint-disable-next-line @typescript-eslint/camelcase
-      start_url: '/' // The default vue pwa plugin uses '.'. Also many examples on line show '/index.html'. Either of these will
-      // result in a blank screen when installed on iOS or Android, but they will work fine on a PC. The '/' must also be included
-      // in the router. This will meet the requirements of a good start_url and it will install and display correctly on the devices.
+      start_url: '/'
     },
-    workboxPluginMode: 'InjectManifest', // GenerateSW doesn't allow you to send the SKIP_WAITING message to allow users to update PWA.
+    workboxPluginMode: 'InjectManifest',
     workboxOptions: {
       swSrc: './src/sw.js',
       swDest: 'service-worker.js'
     }
-  },
-  chainWebpack: config => {
-    config
-      .plugin('html')
-      .tap(args => {
-        args[0].title = 'KB Coder PWA App' // Add title to the app bar when installed as PWA.
-        return args
-      })
   }
+  // chainWebpack: config => {
+  //   // Webpack includes a small piece of runtime code that gets inserted into the last chunk created. This could cause our vendor
+  //   // chunk to change unnecessarily. So the next line causes this runtime to be put in a separate file.
+  //   // Doing this in development mode causes the pwalocalserve to not see changes in files and trigger service worker.
+  //   if (process.env.NODE_ENV === 'production') {
+  //     config.optimization.set('runtimeChunk', true)
+  //   }
+  // }
 }

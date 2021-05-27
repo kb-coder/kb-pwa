@@ -13,12 +13,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <transition
-    name="fade"
-    appear
-  >
-    <AppManualUpdate />
-  </transition>
+  <AppManualUpdate />
   <header>
     <router-view
       name="header"
