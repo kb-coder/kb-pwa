@@ -7,7 +7,7 @@ import { Workbox } from 'workbox-window'
 
 // Checks for updates every hour. When an update is found, the app-auto-update component and use-service-worker composable
 // handles the actual updating.
-const autoUpdate = async (registration) => {
+const autoUpdate = async (registration: ServiceWorkerRegistration | undefined) => {
   const updateInterval = 1000 * 60 * 60 // 1 hour
   // const updateInterval = 1000 * 60 // 1 min // for debugging
   setInterval(async () => {
@@ -23,15 +23,14 @@ const autoUpdate = async (registration) => {
 
 // Emits an event that the use-service-worker composable is listens to. Then the app-manual-update is controlled by
 // a property on the composable and prompts the user to update.
-const manualUpdateAvailable = (wb) => {
+const manualUpdateAvailable = (wb: Workbox) => {
   // Wires up an event that we can listen to in the app. Example: listen for available update and prompt user to update.
   console.log('sw: manualUpdateAvailable dispatching event')
   document.dispatchEvent(
     new CustomEvent('swUpdated', { detail: wb }))
 }
 
-/* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types */
-const register = async () => {
+const register = async () : Promise<void> => {
   if ('serviceWorker' in navigator) {
     // Workbox combines the ./src/sw.js file and injected manifest into the servicer-worker.js file in /dist
     // Uses vue.config.js workboxOptions.swSrc for the location of sw.js and swDest for the output location of 'service-worker.js'.
@@ -70,10 +69,6 @@ const register = async () => {
 
     wb.addEventListener('controlling', () => {
       console.log('sw: controlling event listener hit.')
-    })
-
-    wb.addEventListener('fetch', () => {
-      console.log('sw: fetch event listener hit.')
     })
   }
 }

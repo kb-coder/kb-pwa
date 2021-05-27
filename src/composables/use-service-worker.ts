@@ -27,11 +27,16 @@ export const useServiceWorker = (forceUpdate = false): UseServiceWorker => {
 
   const refreshApp = () => {
     console.log('useServiceWorker: refreshApp called.')
-    wb.addEventListener('controlling', () => {
-      reloadApp()
-    })
+    try {
+      wb.addEventListener('controlling', () => {
+        console.log('useServiceWorker: refreshApp controlling listener called.')
+        reloadApp()
+      })
 
-    wb.messageSkipWaiting()
+      wb.messageSkipWaiting()
+    } catch (err) {
+      console.log(`useServiceWorker: refreshApp error: ${err}`)
+    }
   }
 
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */

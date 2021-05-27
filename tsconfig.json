@@ -26,7 +26,8 @@
       "esnext",
       "dom",
       "dom.iterable",
-      "scripthost"
+      "scripthost",
+      "webworker"
     ]
   },
   "include": [
@@ -35,8 +36,8 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx",
-    "src/service-worker/register-service-worker.js",
-    "src/service-worker/sw.js"
+    "src/service-worker/register-service-worker.ts",
+    "src/sw.js"
   ],
   "exclude": [
     "node_modules"

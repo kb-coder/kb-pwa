@@ -7,6 +7,7 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
+    "ts:build": "tsc --project tsconfig.json",
     "dev": "npm run lint && npm run dev-build && npm run serve",
     "dev-build": "vue-cli-service build --mode development",
     "pwa-build": "vue-cli-service build --mode pwalocalserve",
