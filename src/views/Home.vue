@@ -12,8 +12,7 @@ export default defineComponent({
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <h1>My PWA</h1>
-    <p>How about Fri?</p>
+    <h1>Here's a random dog</h1>
     <dog-loader />
   </div>
 </template>
