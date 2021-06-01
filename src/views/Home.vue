@@ -1,8 +1,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
+import DogLoader from '@/components/dog-loader.vue'
 
 export default defineComponent({
-  name: 'Home'
+  name: 'Home',
+  components: {
+    DogLoader
+  }
 })
 </script>
 <template>
@@ -10,6 +14,7 @@ export default defineComponent({
     <img alt="Vue logo" src="../assets/logo.png">
     <h1>My PWA</h1>
     <p>How about Fri?</p>
+    <dog-loader />
   </div>
 </template>
 <style scoped>
