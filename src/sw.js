@@ -14,7 +14,7 @@ cleanupOutdatedCaches()
 registerRoute(
   /(\/|\.html)$/,
   new NetworkFirst({
-    cacheName: 'html'
+    cacheName: 'kbpwa-html'
   })
 )
 
@@ -27,7 +27,7 @@ registerRoute(
   // Use a Stale While Revalidate caching strategy
   new StaleWhileRevalidate({
     // Put all cached files in a cache named 'assets'
-    cacheName: 'assets',
+    cacheName: 'kbpwa-assets',
     plugins: [
       // Ensure that only requests that result in a 200 status are cached
       new CacheableResponsePlugin({
@@ -44,7 +44,7 @@ registerRoute(
   // Use a Cache First caching strategy
   new CacheFirst({
     // Put all cached files in a cache named 'images'
-    cacheName: 'images',
+    cacheName: 'kbpwa-images',
     plugins: [
       // Ensure that only requests that result in a 200 status are cached
       new CacheableResponsePlugin({
@@ -71,5 +71,13 @@ self.addEventListener('message', (event) => {
 
 self.addEventListener('fetch', (event) => {
   console.log('sw root: fetch event listener hit.')
-  console.log(event)
+  // console.log(event)
+
+  // if (event.request.url.includes('/api/breeds/image/random')) {
+  //   event.respondWith(async () => {
+  //     const strategy = new StaleWhileRevalidate({ cacheName: 'kbpwa-api-cache' })
+  //     const randoDog = strategy.handle({ event, request: event.request.url })
+  //     return randoDog
+  //   })
+  // }
 })
