@@ -59,6 +59,21 @@ registerRoute(
   })
 )
 
+// Network first for api calls
+registerRoute(
+  ({ url }) => url.pathname.includes('/api/breeds/image/random'),
+  // Use a Stale While Revalidate caching strategy
+  new NetworkFirst({
+    cacheName: 'kbpwa-api-cache',
+    plugins: [
+      // Ensure that only requests that result in a 200 status are cached
+      new CacheableResponsePlugin({
+        statuses: [200]
+      })
+    ]
+  })
+)
+
 self.addEventListener('message', (event) => {
   console.log('sw root: message event listener hit.')
   switch (event.data && event.data.type) {
@@ -71,13 +86,5 @@ self.addEventListener('message', (event) => {
 
 self.addEventListener('fetch', (event) => {
   console.log('sw root: fetch event listener hit.')
-  // console.log(event)
-
-  // if (event.request.url.includes('/api/breeds/image/random')) {
-  //   event.respondWith(async () => {
-  //     const strategy = new StaleWhileRevalidate({ cacheName: 'kbpwa-api-cache' })
-  //     const randoDog = strategy.handle({ event, request: event.request.url })
-  //     return randoDog
-  //   })
-  // }
+  // console.log(event.request.url)
 })
