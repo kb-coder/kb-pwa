@@ -14,7 +14,7 @@ cleanupOutdatedCaches()
 registerRoute(
   /(\/|\.html)$/,
   new NetworkFirst({
-    cacheName: 'html'
+    cacheName: 'kbpwa-html'
   })
 )
 
@@ -27,7 +27,7 @@ registerRoute(
   // Use a Stale While Revalidate caching strategy
   new StaleWhileRevalidate({
     // Put all cached files in a cache named 'assets'
-    cacheName: 'assets',
+    cacheName: 'kbpwa-assets',
     plugins: [
       // Ensure that only requests that result in a 200 status are cached
       new CacheableResponsePlugin({
@@ -44,7 +44,7 @@ registerRoute(
   // Use a Cache First caching strategy
   new CacheFirst({
     // Put all cached files in a cache named 'images'
-    cacheName: 'images',
+    cacheName: 'kbpwa-images',
     plugins: [
       // Ensure that only requests that result in a 200 status are cached
       new CacheableResponsePlugin({
@@ -54,6 +54,21 @@ registerRoute(
       new ExpirationPlugin({
         maxEntries: 50,
         maxAgeSeconds: 60 * 60 * 24 * 30 // 30 Days
+      })
+    ]
+  })
+)
+
+// Network first for api calls
+registerRoute(
+  ({ url }) => url.pathname.includes('/api/breeds/image/random'),
+  // Use a Stale While Revalidate caching strategy
+  new NetworkFirst({
+    cacheName: 'kbpwa-api-cache',
+    plugins: [
+      // Ensure that only requests that result in a 200 status are cached
+      new CacheableResponsePlugin({
+        statuses: [200]
       })
     ]
   })
@@ -69,7 +84,6 @@ self.addEventListener('message', (event) => {
   }
 })
 
-self.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', () => {
   console.log('sw root: fetch event listener hit.')
-  console.log(event)
 })
