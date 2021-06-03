@@ -12,12 +12,6 @@ export default defineComponent({
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <h1>Here's a random dog</h1>
     <dog-loader />
   </div>
 </template>
-<style scoped>
-h1 {
-  padding-bottom: .5em;
-}
-</style>

@@ -61,7 +61,7 @@
     "less-loader": "^5.0.0",
     "typescript": "^3.9.7",
     "vue-cli-plugin-tailwind": "~2.0.6",
-    "vue-cli-plugin-workbox-pwa": "file:../vue-cli-plugin-workbox-pwa",
+    "vue-cli-plugin-workbox-pwa": "^0.1.0",
     "vue-jest": "^5.0.0-0",
     "workbox-webpack-plugin": "^6.1.5"
   }

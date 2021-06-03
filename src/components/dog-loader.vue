@@ -1,4 +1,5 @@
 <template>
+  <h1>Here's a random dog</h1>
   <button
     class="p-2 mb-4 border-2 border-solid border-purple-700 text-purple-700 font-medium rounded-md shadow-md"
     @click.prevent="getRandomDog"
@@ -29,7 +30,6 @@ export default defineComponent({
         }
       } catch (error) {
         error.value = error?.message ? error.message : 'Some error happened while trying to fetch Rover.'
-        console.log(error)
       }
     }
 
@@ -43,3 +43,8 @@ export default defineComponent({
   }
 })
 </script>
+<style scoped>
+h1 {
+  padding-bottom: .5em;
+}
+</style>
