@@ -12,7 +12,7 @@ module.exports = {
   },
   pwa: {
     name: 'KB Coder PWA App',
-    shorName: 'KB Coder',
+    shortName: 'KB Coder',
     themeColor: '#400080',
     msTileColor: '#800080',
     manifestOptions: {
